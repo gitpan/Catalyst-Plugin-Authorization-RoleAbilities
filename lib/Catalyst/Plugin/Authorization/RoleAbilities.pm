@@ -9,6 +9,13 @@ use Set::Object         ();
 use Scalar::Util        ();
 use Catalyst::Exception ();
 
+sub check_user_ability {
+    my ($c, @roles) = @_;
+    local $@;
+    eval { $c->assert_user_ability(@roles) };
+    return $@ ? 0 : 1;
+}
+
 sub assert_user_ability {
     my ($c, @actions) = @_;
 
@@ -50,7 +57,7 @@ Catalyst::Plugin::Authorization::RoleAbilities - Ability based authorization for
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 SYNOPSIS
 
@@ -90,6 +97,11 @@ appropriate action, etc.) the check fails, an error is thrown.
 
 You can either catch these errors with an eval, or clean them up in your C<end>
 action.
+
+=head2 check_user_ability [ $user ], @actions
+
+Takes the same args as C<assert_user_ability>, and performs the same check, but
+instead of throwing errors returns a boolean value.
 
 =head1 REQUIRED TABLES
 

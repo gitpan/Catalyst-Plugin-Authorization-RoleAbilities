@@ -1,7 +1,7 @@
 
 
 This archive contains the distribution Catalyst-Plugin-Authorization-RoleAbilities,
-version 0.001:
+version 0.002:
 
   Ability based authorization for Catalyst (using only Roles)
 

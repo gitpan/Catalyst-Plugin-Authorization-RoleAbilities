@@ -13,6 +13,7 @@ my %WriteMakefileArgs = (
   "AUTHOR" => "Matthias Dietrich <perl\@rainboxx.de>",
   "BUILD_REQUIRES" => {
     "Catalyst::Authentication::User" => 0,
+    "English" => 0,
     "Test::Exception" => 0,
     "Test::More" => 0,
     "base" => 0,
@@ -33,7 +34,7 @@ my %WriteMakefileArgs = (
     "Scalar::Util" => 0,
     "Set::Object" => 0
   },
-  "VERSION" => "0.001",
+  "VERSION" => "0.002",
   "test" => {
     "TESTS" => "t/*.t"
   }
