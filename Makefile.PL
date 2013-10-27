@@ -11,15 +11,7 @@ use ExtUtils::MakeMaker 6.30;
 my %WriteMakefileArgs = (
   "ABSTRACT" => "Ability based authorization for Catalyst (using only Roles)",
   "AUTHOR" => "Matthias Dietrich <perl\@rainboxx.de>",
-  "BUILD_REQUIRES" => {
-    "Catalyst::Authentication::User" => 0,
-    "English" => 0,
-    "Test::Exception" => 0,
-    "Test::More" => 0,
-    "base" => 0,
-    "strict" => 0,
-    "warnings" => 0
-  },
+  "BUILD_REQUIRES" => {},
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => "6.30"
   },
@@ -34,12 +26,33 @@ my %WriteMakefileArgs = (
     "Scalar::Util" => 0,
     "Set::Object" => 0
   },
-  "VERSION" => "0.002",
+  "TEST_REQUIRES" => {
+    "Catalyst::Authentication::User" => 0,
+    "Test::Exception" => 0,
+    "Test::More" => 0,
+    "base" => 0,
+    "strict" => 0,
+    "warnings" => 0
+  },
+  "VERSION" => "0.003",
   "test" => {
     "TESTS" => "t/*.t"
   }
 );
 
+
+unless ( eval { ExtUtils::MakeMaker->VERSION(6.63_03) } ) {
+  my $tr = delete $WriteMakefileArgs{TEST_REQUIRES};
+  my $br = $WriteMakefileArgs{BUILD_REQUIRES};
+  for my $mod ( keys %$tr ) {
+    if ( exists $br->{$mod} ) {
+      $br->{$mod} = $tr->{$mod} if $tr->{$mod} > $br->{$mod};
+    }
+    else {
+      $br->{$mod} = $tr->{$mod};
+    }
+  }
+}
 
 unless ( eval { ExtUtils::MakeMaker->VERSION(6.56) } ) {
   my $br = delete $WriteMakefileArgs{BUILD_REQUIRES};
